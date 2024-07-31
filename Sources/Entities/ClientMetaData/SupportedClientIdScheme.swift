@@ -33,9 +33,12 @@ public enum SupportedClientIdScheme {
       return .did
     case .verifierAttestation:
       return .verifierAttestation
+    case .redirectUri:
+        return .redirectUri
     }
   }
 
+  case redirectUri(clientId: String)
   case preregistered(clients: [String: PreregisteredClient])
   case x509SanUri(trust: CertificateTrust)
   case x509SanDns(trust: CertificateTrust)
