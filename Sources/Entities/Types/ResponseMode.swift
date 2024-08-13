@@ -80,41 +80,48 @@ public enum ResponseMode {
   /// - Throws: A `ValidatedAuthorizationError.missingRequiredField` if the required fields are missing,
   ///           or a `ValidatedAuthorizationError.unsupportedResponseMode` if the response mode is unsupported.
   public init(authorizationRequestData: AuthorisationRequestObject) throws {
-    guard let responseMode = authorizationRequestData.responseMode else {
-      throw ValidatedAuthorizationError.missingRequiredField(".responseMode")
+    if let responseMode = authorizationRequestData.responseMode {
+        switch responseMode {
+        case "direct_post":
+          if let responseUri = authorizationRequestData.responseUri,
+             let uri = URL(string: responseUri) {
+            self = .directPost(responseURI: uri)
+          } else {
+            throw ValidatedAuthorizationError.missingRequiredField(".responseUri")
+          }
+        case "direct_post.jwt":
+          if let responseUri = authorizationRequestData.responseUri,
+             let uri = URL(string: responseUri) {
+             self = .directPostJWT(responseURI: uri)
+          } else {
+            throw ValidatedAuthorizationError.missingRequiredField(".responseUri")
+          }
+        case "query":
+          if let redirectUri = authorizationRequestData.redirectUri,
+             let uri = URL(string: redirectUri) {
+            self = .query(responseURI: uri)
+          } else {
+            throw ValidatedAuthorizationError.missingRequiredField(".redirectUri")
+          }
+        case "fragment":
+          if let redirectUri = authorizationRequestData.redirectUri,
+             let uri = URL(string: redirectUri) {
+            self = .fragment(responseURI: uri)
+          } else {
+            throw ValidatedAuthorizationError.missingRequiredField(".redirectUri")
+          }
+        default:
+          throw ValidatedAuthorizationError.unsupportedResponseMode(responseMode)
+        }
+    } else {
+        if let redirectUri = authorizationRequestData.redirectUri,
+           let uri = URL(string: redirectUri) {
+          self = .fragment(responseURI: uri)
+        } else {
+          throw ValidatedAuthorizationError.missingRequiredField(".redirectUri")
+        }
     }
 
-    switch responseMode {
-    case "direct_post":
-      if let responseUri = authorizationRequestData.responseUri,
-         let uri = URL(string: responseUri) {
-        self = .directPost(responseURI: uri)
-      } else {
-        throw ValidatedAuthorizationError.missingRequiredField(".responseUri")
-      }
-    case "direct_post.jwt":
-      if let responseUri = authorizationRequestData.responseUri,
-         let uri = URL(string: responseUri) {
-         self = .directPostJWT(responseURI: uri)
-      } else {
-        throw ValidatedAuthorizationError.missingRequiredField(".responseUri")
-      }
-    case "query":
-      if let redirectUri = authorizationRequestData.redirectUri,
-         let uri = URL(string: redirectUri) {
-        self = .query(responseURI: uri)
-      } else {
-        throw ValidatedAuthorizationError.missingRequiredField(".redirectUri")
-      }
-    case "fragment":
-      if let redirectUri = authorizationRequestData.redirectUri,
-         let uri = URL(string: redirectUri) {
-        self = .fragment(responseURI: uri)
-      } else {
-        throw ValidatedAuthorizationError.missingRequiredField(".redirectUri")
-      }
-    default:
-      throw ValidatedAuthorizationError.unsupportedResponseMode(responseMode)
-    }
+    
   }
 }
