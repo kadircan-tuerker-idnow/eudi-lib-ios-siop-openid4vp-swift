@@ -40,7 +40,7 @@ public enum DecentralizedIdentifier: Equatable {
   public func isValid() -> Bool {
     switch self {
     case .did(let value):
-      let regexPattern = "^did:web:[a-z0-9]+:[a-zA-Z0-9_.-]+$"
+      let regexPattern = "^did:web:[a-zA-Z0-9_.-]+:[a-zA-Z0-9_.-]+$"
       guard let regex = try? NSRegularExpression(pattern: regexPattern, options: []) else {
         return false
       }
