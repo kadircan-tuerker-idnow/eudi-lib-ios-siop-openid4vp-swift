@@ -383,7 +383,7 @@ private extension ValidatedSiopOpenId4VPRequest {
       clientMetaDataSource: .init(authorizationRequestData: authorizationRequestData),
       clientIdScheme: try .init(authorizationRequestData: authorizationRequestData),
       clientId: clientId, 
-      client: .preRegistered(clientId: clientId, legalName: clientId),
+      client: .redirectUri(clientId: URL(string: clientId)!),
       nonce: nonce,
       responseMode: try? .init(authorizationRequestData: authorizationRequestData),
       state: authorizationRequestData.state
