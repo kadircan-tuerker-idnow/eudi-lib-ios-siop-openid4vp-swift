@@ -99,8 +99,10 @@ public actor AuthorisationService: AuthorisationServiceType {
     case .fragment(let url, let data):
         switch data {
         case .openId4VPAuthorizationResponse(let vpToken, let verifiableCredential, let presentationSubmission, let state, let nonce):
-            var urlString = url.absoluteString
-            var redirectUri = "\(urlString)#vp_token=\(vpToken)&presentation_submission=\(presentationSubmission)"
+            let urlString = url.absoluteString
+            let serialised = try JSONEncoder().encode(presentationSubmission)
+            guard let json = String(data: serialised, encoding: .utf8) else { throw AuthorizationError.invalidResponseMode}
+            let redirectUri = "\(urlString)#vp_token=\(vpToken)&presentation_submission=\(json)"
             guard let redirectURL = URL(string: redirectUri) else {
                 throw AuthorizationError.invalidResponseMode
             }
