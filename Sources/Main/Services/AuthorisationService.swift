@@ -102,7 +102,7 @@ public actor AuthorisationService: AuthorisationServiceType {
             let urlString = url.absoluteString
             let serialised = try JSONEncoder().encode(presentationSubmission)
             guard let json = String(data: serialised, encoding: .utf8) else { throw AuthorizationError.invalidResponseMode}
-            let redirectUri = "\(urlString)#vp_token=\(vpToken)&presentation_submission=\(json)"
+            let redirectUri = "\(urlString)#vp_token=\(vpToken.value)&presentation_submission=\(json)"
             guard let redirectURL = URL(string: redirectUri) else {
                 throw AuthorizationError.invalidResponseMode
             }
