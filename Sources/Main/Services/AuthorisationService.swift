@@ -97,7 +97,18 @@ public actor AuthorisationService: AuthorisationServiceType {
     case .query, .queryJwt, .fragmentJwt:
       throw AuthorizationError.invalidResponseMode
     case .fragment(let url, let data):
-        return .redirectUri(redirectURI: url)
+        switch data {
+        case .openId4VPAuthorizationResponse(let vpToken, let verifiableCredential, let presentationSubmission, let state, let nonce):
+            var urlString = url.absoluteString
+            var redirectUri = "\(urlString)#vp_token=\(vpToken)&presentation_submission=\(presentationSubmission)"
+            guard let redirectURL = URL(string: redirectUri) else {
+                throw AuthorizationError.invalidResponseMode
+            }
+            return .redirectUri(redirectURI: redirectURL)
+
+        default:
+            throw AuthorizationError.invalidResponseMode
+        }
     }
   }
 }
