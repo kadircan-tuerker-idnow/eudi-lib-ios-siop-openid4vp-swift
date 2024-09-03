@@ -20,7 +20,7 @@ public protocol AuthorisationServiceType {
   /// Posts a response and returns a generic result.
   func formPost<T: Codable>(poster: Posting, response: AuthorizationResponse) async throws -> T
   /// Posts a response and returns a success boolean.
-  func formCheck(poster: Posting, response: AuthorizationResponse) async throws -> (String, Bool)
+  func formCheck(poster: Posting, response: AuthorizationResponse) async throws -> DispatchOutcome
 }
 
 /// An implementation of the `AuthorisationServiceType` protocol.
@@ -52,7 +52,7 @@ public actor AuthorisationService: AuthorisationServiceType {
   }
 
   /// Posts a response and returns a success boolean.
-  public func formCheck(poster: Posting, response: AuthorizationResponse) async throws -> (String, Bool) {
+  public func formCheck(poster: Posting, response: AuthorizationResponse) async throws -> DispatchOutcome {
     switch response {
     case .directPost(let url, let data):
       
@@ -68,7 +68,8 @@ public actor AuthorisationService: AuthorisationServiceType {
       )
 
       let result: Result<(String, Bool), PostError> = await poster.check(key: "redirect_uri", request: post.urlRequest)
-      return try result.get()
+        let response = try result.get()
+        return response.1 == true ? .accepted(redirectURI: URL(string: response.0)) : .rejected(reason: "")
     case .directPostJwt(let url, let data, let jarmSpec):
       let encryptor = ResponseSignerEncryptor()
       let joseResponse = try await encryptor.signEncryptResponse(spec: jarmSpec, data: data)
@@ -90,10 +91,13 @@ public actor AuthorisationService: AuthorisationServiceType {
       self.joseResponse = joseResponse
       
       let result: Result<(String, Bool), PostError> = await poster.check(key: "redirect_uri", request: post.urlRequest)
-      return try result.get()
+        let response = try result.get()
+        return response.1 == true ? .accepted(redirectURI: URL(string: response.0)) : .rejected(reason: "")
       
-    case .query, .queryJwt, .fragment, .fragmentJwt:
+    case .query, .queryJwt, .fragmentJwt:
       throw AuthorizationError.invalidResponseMode
+    case .fragment(let url, let data):
+        return .redirectUri(redirectURI: url)
     }
   }
 }
