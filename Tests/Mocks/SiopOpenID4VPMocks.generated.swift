@@ -36,24 +36,24 @@ public final class AuthorisationServiceTypeMock: AuthorisationServiceType, Mocki
   }
 
   // MARK: Mocked `formCheck`(`poster`: Posting, `response`: AuthorizationResponse)
-  public func `formCheck`(`poster`: Posting, `response`: AuthorizationResponse) async throws -> (String, Bool) {
+  public func `formCheck`(`poster`: Posting, `response`: AuthorizationResponse) async throws -> DispatchOutcome {
     return try await self.mockingbirdContext.mocking.didInvoke(Mockingbird.SwiftInvocation(selectorName: "`formCheck`(`poster`: Posting, `response`: AuthorizationResponse) async throws -> (String, Bool)", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.ArgumentMatcher(`poster`), Mockingbird.ArgumentMatcher(`response`)], returnType: Swift.ObjectIdentifier(((String, Bool)).self))) {
       self.mockingbirdContext.recordInvocation($0)
       let mkbImpl = self.mockingbirdContext.stubbing.implementation(for: $0)
-      if let mkbImpl = mkbImpl as? (Posting, AuthorizationResponse) async throws -> (String, Bool) { return try await mkbImpl(`poster`, `response`) }
-      if let mkbImpl = mkbImpl as? () async throws -> (String, Bool) { return try await mkbImpl() }
+      if let mkbImpl = mkbImpl as? (Posting, AuthorizationResponse) async throws -> DispatchOutcome { return try await mkbImpl(`poster`, `response`) }
+      if let mkbImpl = mkbImpl as? () async throws -> DispatchOutcome { return try await mkbImpl() }
       for mkbTargetBox in self.mockingbirdContext.proxy.targets(for: $0) {
         switch mkbTargetBox.target {
         case .super:
           break
         case .object(let mkbObject):
           guard var mkbObject = mkbObject as? MockingbirdSupertype else { break }
-          let mkbValue: (String, Bool) = try await mkbObject.`formCheck`(poster: `poster`, response: `response`)
+          let mkbValue: DispatchOutcome = try await mkbObject.`formCheck`(poster: `poster`, response: `response`)
           self.mockingbirdContext.proxy.updateTarget(&mkbObject, in: mkbTargetBox)
           return mkbValue
         }
       }
-      if let mkbValue = self.mockingbirdContext.stubbing.defaultValueProvider.value.provideValue(for: ((String, Bool)).self) { return mkbValue }
+      if let mkbValue = self.mockingbirdContext.stubbing.defaultValueProvider.value.provideValue(for: (DispatchOutcome).self) { return mkbValue }
       self.mockingbirdContext.stubbing.failTest(for: $0, at: self.mockingbirdContext.sourceLocation)
     }
   }

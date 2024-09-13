@@ -42,11 +42,10 @@ public actor Dispatcher: DispatcherType {
   public func dispatch(
     poster: Posting = Poster()
   ) async throws -> DispatchOutcome {
-    let result = try await service.formCheck(
+    return try await service.formCheck(
       poster: poster,
       response: self.authorizationResponse
     )
 
-    return result.1 == true ? .accepted(redirectURI: URL(string: result.0)) : .rejected(reason: "")
   }
 }

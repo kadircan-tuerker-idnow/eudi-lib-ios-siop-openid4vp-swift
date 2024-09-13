@@ -39,7 +39,7 @@ extension ClientIdScheme {
   /// - Throws: An error if the client ID scheme is unsupported.
   init(authorizationRequestObject: JSONObject) throws {
     let scheme = authorizationRequestObject["client_id_scheme"] as? String ?? "unknown"
-    guard scheme == "pre-registered" || scheme == "x509_san_dns" || scheme == "x509_san_uri",
+    guard scheme == "pre-registered" || scheme == "x509_san_dns" || scheme == "x509_san_uri" || scheme == "redirect_uri",
       let clientIdScheme = ClientIdScheme(rawValue: scheme)
     else {
       throw ValidatedAuthorizationError.unsupportedClientIdScheme(scheme)
@@ -53,7 +53,7 @@ extension ClientIdScheme {
   /// - Throws: An error if the client ID scheme is unsupported.
   init(authorizationRequestData: AuthorisationRequestObject) throws {
     guard
-      authorizationRequestData.clientIdScheme == "pre-registered",
+      (authorizationRequestData.clientIdScheme == "pre-registered" || authorizationRequestData.clientIdScheme == "redirect_uri"),
       let clientIdScheme = ClientIdScheme(rawValue: authorizationRequestData.clientIdScheme ?? "")
     else {
       throw ValidatedAuthorizationError.unsupportedClientIdScheme(authorizationRequestData.clientIdScheme)

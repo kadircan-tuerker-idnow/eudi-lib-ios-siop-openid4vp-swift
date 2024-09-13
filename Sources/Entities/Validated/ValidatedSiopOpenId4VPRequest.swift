@@ -280,6 +280,12 @@ public extension ValidatedSiopOpenId4VPRequest {
         clientId: clientId,
         legalName: client.legalName
       )
+        
+    case .redirectUri(let clientId):
+        guard let clientIdURL = URL(string: clientId) else {
+            throw ValidatedAuthorizationError.validationError("redirectUri client not found")
+        }
+        return .redirectUri(clientId: clientIdURL)
 
     case .x509SanUri,
          .x509SanDns:
@@ -377,7 +383,7 @@ private extension ValidatedSiopOpenId4VPRequest {
       clientMetaDataSource: .init(authorizationRequestData: authorizationRequestData),
       clientIdScheme: try .init(authorizationRequestData: authorizationRequestData),
       clientId: clientId, 
-      client: .preRegistered(clientId: clientId, legalName: clientId),
+      client: .redirectUri(clientId: URL(string: clientId)!),
       nonce: nonce,
       responseMode: try? .init(authorizationRequestData: authorizationRequestData),
       state: authorizationRequestData.state

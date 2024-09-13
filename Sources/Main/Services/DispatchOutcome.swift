@@ -18,10 +18,12 @@ import Foundation
 public enum DispatchOutcome: Codable, Equatable {
   case accepted(redirectURI: URL?)
   case rejected(reason: String)
+  case redirectUri(redirectURI: URL?)
 
   enum CodingKeys: String, CodingKey {
     case accepted
     case rejected
+      case redirectUri
   }
 }
 
@@ -57,6 +59,8 @@ public extension DispatchOutcome {
       try container.encode(redirectURI, forKey: .accepted)
     case .rejected(let reason):
       try container.encode(reason, forKey: .rejected)
+    case .redirectUri(let redirectURI):
+        try container.encode(redirectURI, forKey: .accepted)
     }
   }
 }
