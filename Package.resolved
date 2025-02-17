@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/KittyMac/Chronometer.git",
       "state" : {
-        "revision" : "b4808d59a175b1f764cc3d7e2e927e5476b10427",
-        "version" : "0.1.11"
+        "revision" : "d21b89e5cb5929b5175bdb3ad710a52cbf497eaa",
+        "version" : "0.1.12"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/KittyMac/Hitch.git",
       "state" : {
-        "revision" : "6b426996533d8a13eb61dcbc954f2fd5bed9e18f",
-        "version" : "0.4.129"
+        "revision" : "d6c147a1d70992db39a141cb5bf9cf8fbb776250",
+        "version" : "0.4.148"
       }
     },
     {
@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/KittyMac/Sextant.git",
       "state" : {
-        "revision" : "52a77d0bce0210cf9557faef7fd0adb9a6da02fb",
-        "version" : "0.4.31"
+        "revision" : "b2141d4a693e2a768720534009cb621252be39a0",
+        "version" : "0.4.33"
       }
     },
     {
@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/KittyMac/Spanker.git",
       "state" : {
-        "revision" : "96e58f68274a2e6f370fff153ceb5674a06936c4",
-        "version" : "0.2.47"
+        "revision" : "d4b439bf76a40fb45d86a24d13b9c26e7d630eee",
+        "version" : "0.2.49"
       }
     },
     {
@@ -104,8 +104,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-asn1.git",
       "state" : {
-        "revision" : "c7e239b5c1492ffc3ebd7fbcc7a92548ce4e78f0",
-        "version" : "1.1.0"
+        "revision" : "ae33e5941bb88d88538d0a6b19ca0b01e6c76dcf",
+        "version" : "1.3.1"
       }
     },
     {
@@ -113,8 +113,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-certificates.git",
       "state" : {
-        "revision" : "bc566f88842b3b8001717326d935c2d113af5741",
-        "version" : "1.2.0"
+        "revision" : "274f8668d3ec5d2892904d8465635c5ea659f767",
+        "version" : "1.7.0"
       }
     },
     {
@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",
       "state" : {
-        "revision" : "f0525da24dc3c6cbb2b6b338b65042bc91cbc4bb",
-        "version" : "3.3.0"
+        "revision" : "b828ba476ab068f0b00d6b41f92f364961b0f323",
+        "version" : "3.10.2"
       }
     },
     {
